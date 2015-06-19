@@ -61,6 +61,11 @@ class Dates {
 		 return $this;
 	}
 
+	/**
+	 * Função para retornar a data no formato desejado
+	 * @param  string $formato Formato que deseja a data
+	 * @return string Data formatada
+	 */
 	public function show($formato) 
 	{
 		return $this->date->format($formato);
