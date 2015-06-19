@@ -27,10 +27,19 @@ class Dates {
 	{
 		$date = trim($date);
 
+		if (substr('/', $date) == 2) {
+
+			$date = implode('-',array_reverse(explode('/', substr($date, 0, 10)));
+
+			if (substr_count(':', $date) > 0) {
+				$date = $date.' '.substr($date, 11);
+			}
+		}
+
 		try {
 			$this->date = new \DateTime($date);
 		} catch (\Exception $e) {
-				throw new \Exception("Mensagem: Data invalida. A data deve ter o formato yyyy-mm-dd hh:mm:ss");
+			throw new \Exception("Mensagem: Data invalida. A data deve ter o formato yyyy-mm-dd hh:mm:ss");
 		}
 	}
 
@@ -66,7 +75,7 @@ class Dates {
 	 * @param  string $formato Formato que deseja a data
 	 * @return string Data formatada
 	 */
-	public function show($formato) 
+	public function get($formato) 
 	{
 		return $this->date->format($formato);
 	}
@@ -77,7 +86,7 @@ class Dates {
 #### MODO DE USO
 	try {
 		$data = new Dates('2015-06-19 15:20:15');
-		echo $data->add(['days' => 3, 'months' => 1, 'years' => 2, 'hours' => 2, 'minutes' => 20, 'seconds' => 20])->show('d/m/Y H:i:s');
+		echo $data->add(['days' => 3, 'months' => 1, 'years' => 2, 'hours' => 2, 'minutes' => 20, 'seconds' => 20])->get('d/m/Y H:i:s');
 	} catch (\Exception $e) {
 		echo $e->getMessage();
 	}
