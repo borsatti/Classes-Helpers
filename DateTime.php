@@ -1,5 +1,4 @@
 <?php namespace Borsatti\Helpers;
-
 /**
  * Helper class for manipulate dates using php \DateTime
  * @package  Borsatti\Helpers
@@ -23,23 +22,32 @@ class Dates {
 	 * @param date $date Data a ser manipulada
 	 */
 	
-	public function __construct($date) 
+	public function __construct($date, $timezone = '') 
 	{
+
 		$date = trim($date);
 
-		if (substr('/', $date) == 2) {
+		if ($timezone != '') {
+			if (!date_default_timezone_set($timezone)) {
+				throw new \Exception('Falha ao setar o TimeZone');
+			}
+		}
 
-			$date = implode('-',array_reverse(explode('/', substr($date, 0, 10)));
+		if (substr_count($date, '/') == 2) {
 
-			if (substr_count(':', $date) > 0) {
-				$date = $date.' '.substr($date, 11);
+			$data = implode('-',array_reverse(explode('/', substr($date, 0, 10))));
+
+			if (substr_count($date, ':') > 0) {
+				$date = $data.' '.substr($date, 11);
+			} else {
+				$date = $data;
 			}
 		}
 
 		try {
 			$this->date = new \DateTime($date);
 		} catch (\Exception $e) {
-			throw new \Exception("Mensagem: Data invalida. A data deve ter o formato yyyy-mm-dd hh:mm:ss");
+			throw new \Exception("Mensagem: Data invalida - Se a data estiver correta, verifique o seu TimeZone. A data informada foi ".$date);
 		}
 	}
 
@@ -82,12 +90,10 @@ class Dates {
 
 }
 
-/* 
 #### MODO DE USO
-	try {
-		$data = new Dates('2015-06-19 15:20:15');
-		echo $data->add(['days' => 3, 'months' => 1, 'years' => 2, 'hours' => 2, 'minutes' => 20, 'seconds' => 20])->get('d/m/Y H:i:s');
-	} catch (\Exception $e) {
-		echo $e->getMessage();
-	}
-*/
+try {
+	$data = new Dates('2015-05-01', 'America/Campo_Grande');
+	echo $data->add(['days' => 3, 'months' => 1, 'years' => 2, 'hours' => 2, 'minutes' => 20, 'seconds' => 20])->get('d/m/Y H:i:s');
+} catch (\Exception $e) {
+	echo $e->getMessage();
+}
