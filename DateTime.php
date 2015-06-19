@@ -73,9 +73,12 @@ class Dates {
 
 }
 
-try {
-	$data = new Dates('2015-06-19 15:20:15');
-	echo $data->add(['days' => 3, 'months' => 1, 'years' => 2, 'hours' => 2, 'minutes' => 20, 'seconds' => 20])->show('d/m/Y H:i:s');
-} catch (\Exception $e) {
-	echo $e->getMessage();
-}
+/* 
+#### MODO DE USO
+	try {
+		$data = new Dates('2015-06-19 15:20:15');
+		echo $data->add(['days' => 3, 'months' => 1, 'years' => 2, 'hours' => 2, 'minutes' => 20, 'seconds' => 20])->show('d/m/Y H:i:s');
+	} catch (\Exception $e) {
+		echo $e->getMessage();
+	}
+*/
