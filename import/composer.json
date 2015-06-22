@@ -1,0 +1,27 @@
+{
+	"name": "borsatti/webimport",
+	"description": "Sistema de importação para WebMkt",
+    "homepage": "http://www.spidersofthouse.com",
+    "license": "undefined",
+    "authors":[
+        {
+            "name":"Roberto Borsatti",
+            "homepage":"https://github.com/borsatti",
+            "role": "Developer"
+        }
+    ],
+    "suport": {
+        "email":"roberto@fourminds.com.br"
+    },
+    "require": {
+    	"php": ">=5.4.0",
+        "monolog/monolog": "1.0.*",
+		"phpoffice/phpexcel": "^1.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
+    },
+    "autoload": {
+        "psr-0": {"WebImport\\": "src/"}
+    }
+}
