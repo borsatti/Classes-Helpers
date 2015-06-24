@@ -163,6 +163,8 @@ function isDateTimeBR(value) {
 
 }
 	
+var passouFisica = 0;
+var passouJuridica = 0;
 
 var ScpImport = {};
 
@@ -706,13 +708,16 @@ ScpImport.validation = {
 
 	/**
 	 * Validação para Tipo de pessoa
+	 * 
 	 * @param  int column Posição da coluna
 	 */
 	
 	tipo: function(column)
 	{
+		var pessoaFisica = 0;
+		var pessoaJuridica = 0;
 		$('input[position='+column+']').each(function(index) {
-
+			
 			if ($(this).val() == '') {
 
 				$(this).addClass('error');
@@ -724,6 +729,16 @@ ScpImport.validation = {
 				if ($(this).val() != 'Pessoa Física' && $(this).val() != 'Pessoa Jurídica') {
 					$(this).addClass('error');
 				} else {
+
+					if ($(this).val() == 'Pessoa Física' && pessoaFisica == 0) {
+						ScpImport.validation.verificaTipo('f');
+						pessoaFisica = 1;
+					}
+					if ($(this).val() == 'Pessoa Jurídica' && pessoaJuridica == 0) {
+						ScpImport.validation.verificaTipo('j');
+						pessoaJuridica = 1;
+					}
+
 					$(this).removeClass('error');
 				}
 
@@ -731,6 +746,51 @@ ScpImport.validation = {
 
 		});
 	},
+
+	verificaTipo : function(tipo) {
+		if (tipo == 'f') {
+			var nome = 0;
+			var genero = 0;
+			var usuario = 0;
+			var senha = 0;
+			$('select[headers=1]').each(function(index) {
+				if ($(this).val() == 'nome')
+					nome = 1;
+				else if ($(this).val() == 'genero')
+					genero = 1;
+				else if ($(this).val() == 'usuario')
+					usuario = 1;
+				else if ($(this).val() == 'senha')
+					senha = 1;
+			});
+
+			if (nome != 1 || genero != 1 || usuario != 1 || senha != 1)
+				passouFisica = 1;
+			else
+				passouFisica = 0;
+
+		} else if (tipo == 'j') {
+			var nome = 0;
+			var usuario = 0;
+			var senha = 0;
+			$('select[headers=1]').each(function(index) {
+				if ($(this).val() == 'nome')
+					nome = 1;
+				else if ($(this).val() == 'genero')
+					genero = 1;
+				else if ($(this).val() == 'usuario')
+					usuario = 1;
+				else if ($(this).val() == 'senha')
+					senha = 1;
+			});
+
+			if (nome != 1 || usuario != 1 || senha != 1)
+				passouJuridica = 1;
+			else
+				passouJuridica = 0;
+
+		}
+	}
 
 };
 
